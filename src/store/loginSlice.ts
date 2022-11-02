@@ -6,8 +6,7 @@ import { RootState } from "./store";
 const initialState: LoginResponse = {
   name: '',
   avatar: '',
-  username: '',
-  id: ''
+  id: null 
 };
 
 export const loginSlice = createSlice({
@@ -15,10 +14,9 @@ export const loginSlice = createSlice({
   initialState,
   reducers: {
     setUser: (state , action:PayloadAction<LoginResponse | any>) => {
-      state.id = action.payload[0].id;
-      state.name = action.payload[0].name;
-      state.username = action.payload[0].username;
-      state.avatar = action.payload[0].avatar;
+      state.id = action.payload.id;
+      state.name = action.payload.name;
+      state.avatar = action.payload.avatar;
     },
   },
 });

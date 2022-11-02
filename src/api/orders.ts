@@ -5,16 +5,19 @@ export const orderApi = createApi({
   reducerPath: "order",
 
   baseQuery: fetchBaseQuery({
-    baseUrl: "https://635bc79faa7c3f113dc5fe7e.mockapi.io/api",
+    baseUrl: "http://localhost:5000/api/",
   }),
   endpoints: (builder) => ({
     order: builder.mutation<
     OrderResponse[],
-      { username: string; password: string }
-    >({
-      query: () => ({
-        url: `/order?_page=1`,
+    string
+        >({
+      query: (payload) => ({
+        url: `/orders?page=0&limit=12${payload}`, //start=2022-10-11&end=2022-10-16
         method: "get",
+        // headers:{
+        //   Authorization: `Bearer ${payload}`
+        // }
       }),
 
 

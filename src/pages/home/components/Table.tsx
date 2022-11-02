@@ -5,52 +5,62 @@ import { rows } from "./data";
 import Stack from "@mui/material/Stack/Stack";
 import Status from "../../../components/Status";
 import Action from "./Action";
+import { OrderResponse } from "../../../api/types";
 
-type Props = {};
+type Props = {
+  isLoading:boolean;
+  data:OrderResponse[];
+};
 
 const columns: GridColDef[] = [
   {
-    field: "Invoice",
+    field: "id",
     headerName: "Invoice",
-    width: 150,
+    width: 100,
     sortable: false,
     editable: false,
   },
   {
-    field: "Date",
+    field: "date",
     headerName: "Date",
-    width: 110,
+    width: 150,
     filterable: false,
     sortable: false,
     editable: false,
   },
   {
-    field: "Category",
+    field: "category",
     headerName: "Category",
-    width: 150,
+    width: 190,
     sortable: false,
     editable: false,
   },
   {
-    field: "Brand",
+    field: "brand",
     headerName: "Brand",
-    width: 150,
+    width: 190,
     editable: false,
     sortable: false,
+    renderCell: (params: GridRenderCellParams<any>) => (
+      <div>
+        {params.value.modelName }
+      </div>
+    ),
+
   },
   {
-    field: "Cost",
+    field: "cost",
     headerName: "Cost",
     sortable: false,
     editable: false,
-    width: 100,
+    width: 80,
   },
   {
-    field: "Status",
+    field: "status",
     headerName: "Status",
     sortable: false,
     editable: false,
-    width: 150,
+    width: 180,
     renderCell: (params: GridRenderCellParams<Date>) => (
       <div>
         <Status type={`${params.value}`} />
@@ -58,44 +68,50 @@ const columns: GridColDef[] = [
     ),
   },
   {
-    field: "Customer",
+    field: "customer",
     headerName: "Customer",
     sortable: false,
     editable: false,
     width: 150,
   },
   {
-    field: "Number",
-    headerName: "Number",
+    field: "phone",
+    headerName: "Phone number",
     sortable: false,
     editable: false,
     width: 150,
   },
   {
-    field: "Paid",
+    field: "paid",
     headerName: "Paid?",
     sortable: false,
     editable: false,
-    width: 100,
+    width: 70,
+    renderCell: (params: GridRenderCellParams<boolean>) => (
+      <div>
+        {params.value === true ? "Paid" : "Unpaid"}
+      </div>
+    ),
+
   },
   {
-    field: "Actions",
+    field: "actions",
     headerName: "Actions?",
     sortable: false,
     editable: false,
     type: "actions",
-    width: 160,
+    width: 100,
     renderCell: (params: GridRenderCellParams<Date>) => (
       <Action />
     ),
   },
 ];
 
-const Table = (props: Props) => {
+const Table = ({isLoading ,data}: Props) => {
   return (
     <Box sx={{ height: 450, width: "100%", mt: 3 }}>
       <DataGrid
-        rows={rows}
+        rows={data}
         columns={columns}
         pageSize={6}
         rowsPerPageOptions={[5]}
@@ -104,7 +120,7 @@ const Table = (props: Props) => {
         disableColumnMenu
         disableColumnSelector
         autoHeight
-        loading={false}
+        loading={isLoading}
         sx={{
           border: "0",
           ".MuiDataGrid-cellCheckbox .MuiButtonBase-root , .MuiDataGrid-columnHeaderTitleContainerContent .MuiButtonBase-root":

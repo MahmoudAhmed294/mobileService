@@ -2,17 +2,18 @@
 export type LoginResponse = {
   name: string;
   avatar: string;
-  username: string;
-  id: string;
+  id: number | null;
+  token?:string;
 };
 
 export type OrderResponse = {
   date: string;
-  invoiceNumber: number;
   category: string;
-  id: string;
-  brand: string;
-  cost: string;
+  id: number;
+  brand: {
+    brandName: string;
+  };
+  cost: number;
   status: string;
   customer: string;
   paid: boolean;

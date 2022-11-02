@@ -3,13 +3,17 @@ import {loginSlice} from "./loginSlice";
 import {alertsSlice} from "./alertsSlice";
 import { setupListeners } from "@reduxjs/toolkit/dist/query";
 import { loginApi } from '../api/login';
+import { orderApi } from '../api/orders';
+import orderSlice from "./orderSlice";
 
 
  const store = configureStore({
   reducer: {
     user:loginSlice.reducer,
     alerts: alertsSlice.reducer,
+    orders:orderSlice,
     [loginApi.reducerPath]: loginApi.reducer,
+    [orderApi.reducerPath]: orderApi.reducer,
 
   },
   middleware: (getDefaultMiddleware) =>

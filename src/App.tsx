@@ -13,9 +13,10 @@ import "react-datepicker/dist/react-datepicker.css";
 import UpdateOrderDetails from "./pages/updateOrderDetails";
 import { useAppSelector } from "./utils/hooks/useStore";
 import { getUserInfo } from "./store/loginSlice";
+import { useCookies } from "react-cookie";
 
 function App() {
-  const user = useAppSelector(getUserInfo);
+  const [cookies, setCookie] = useCookies(['token']);
 
   return (
     <Router>
@@ -24,7 +25,7 @@ function App() {
         <Route element={<Layout />}>
           <Route
             path="/"
-            element={user.id !== "" ? <Home /> : <Navigate to="/login" />}
+            element={cookies.token !== null ? <Home /> : <Navigate to="/login" />}
           />
           <Route path="/addNewOrder" element={<AddNewOrder />} />
           <Route path="/updateOrderDetails" element={<UpdateOrderDetails />} />

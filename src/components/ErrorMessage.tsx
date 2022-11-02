@@ -13,10 +13,13 @@ const ErrorMessage = ({ children }: Props) => {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-  setTimeout(() => {
+ const show= setTimeout(() => {
     dispatch(deleteMessage())
     }, 4000);
-  }, [])
+    return()=>{
+      clearTimeout(show)
+    }
+  }, [message])
   
 
   return (

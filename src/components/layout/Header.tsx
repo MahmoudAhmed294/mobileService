@@ -150,6 +150,7 @@ const Header = (props: Props) => {
                         ml: "0 !important",
                       },
                     }}
+                    spacing={1}
                   >
                     <Avatar
                       alt="M"

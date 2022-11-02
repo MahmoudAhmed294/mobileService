@@ -21,13 +21,15 @@ import { useAppDispatch } from "../../utils/hooks/useStore";
 import { addMessage } from "../../store/alertsSlice";
 import { useLoginMutation } from "../../api/login";
 import { setUser } from "../../store/loginSlice";
+import { useCookies } from "react-cookie";
 type Props = {};
 
 const Index = (props: Props) => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  const [login, { data, isLoading, error, isError, isSuccess }] =
+  const [login, { data, isLoading, error  , isError, isSuccess }]:any =
     useLoginMutation();
+    const [cookies, setCookie] = useCookies(['token']);
 
   const [formValue, setFormValue] = useState({
     username: "",
@@ -38,14 +40,16 @@ const Index = (props: Props) => {
     password: false,
   });
   useEffect(() => {
-    if (isError) {
-      dispatch(addMessage({ type: "error", message: `${error}` }));
+    if (isError && error) {
+      console.log(error);
+      
+      dispatch(addMessage({ type: "error", message: `${JSON.stringify(error.data)}` }));
     }
   }, [error]);
   useEffect(() => {
     if (isSuccess) {
       dispatch(setUser(data));
-
+      setCookie("token" ,data?.token)
       navigate("/", { replace: true });
     }
   }, [data]);

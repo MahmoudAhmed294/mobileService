@@ -5,19 +5,18 @@ export const loginApi = createApi({
   reducerPath: "login",
 
   baseQuery: fetchBaseQuery({
-    baseUrl: "https://635bc79faa7c3f113dc5fe7e.mockapi.io/api",
+    baseUrl: "http://localhost:5000/api",
   }),
   endpoints: (builder) => ({
     login: builder.mutation<
-      LoginResponse[],
+      LoginResponse,
       { username: string; password: string }
     >({
       query: (payload) => ({
-        url: `/user?password=${payload.password}&username=${payload.username}`,
-        method: "get",
+        url: `/auth/signin`,
+        method: "post",
+        body: payload,
       }),
-
-
     }),
   }),
 });
